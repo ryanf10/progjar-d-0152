@@ -16,7 +16,7 @@ def make_socket(destination_address='localhost',port=12000):
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_address = (destination_address, port)
-        logging.warning(f"connecting to {server_address}")
+        # logging.warning(f"connecting to {server_address}")
         sock.connect(server_address)
         return sock
     except Exception as ee:
@@ -32,20 +32,19 @@ def make_secure_socket(destination_address='localhost',port=10000):
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_address = (destination_address, port)
-        logging.warning(f"connecting to {server_address}")
+        # logging.warning(f"connecting to {server_address}")
         sock.connect(server_address)
         secure_socket = context.wrap_socket(sock,server_hostname=destination_address)
-        logging.warning(secure_socket.getpeercert())
+        # logging.warning(secure_socket.getpeercert())
         return secure_socket
     except Exception as ee:
         logging.warning(f"error {str(ee)}")
 
 def deserialisasi(s):
-    logging.warning(f"deserialisasi {s.strip()}")
+    # logging.warning(f"deserialisasi {s.strip()}")
     return json.loads(s)
     
 
-count_error = 0
 def send_command(command_str,is_secure=False):
     alamat_server = server_address[0]
     port_server = server_address[1]
@@ -79,8 +78,7 @@ def send_command(command_str,is_secure=False):
         # logging.warning("data received from server:")
         return hasil
     except Exception as ee:
-        # logging.warning(f"error during data receiving {str(ee)}")
-        count_error = count_error+1
+        logging.warning(f"error during data receiving {str(ee)}")
         return False
 
 
@@ -89,7 +87,8 @@ def getdatapemain(nomor=[],is_secure=False):
     for key in nomor:
         cmd=f"getdatapemain {nomor[key]}\r\n\r\n"
         hasil = send_command(cmd,is_secure=is_secure)
-        print(hasil)
+        if(hasil):
+            print(hasil)
 
 def lihatversi(is_secure=False):
     cmd=f"versi \r\n\r\n"
@@ -118,7 +117,6 @@ def mythread(nomor,is_secure=False):
     catat_akhir = datetime.datetime.now()
     selesai = catat_akhir - catat_awal
     print(f"Waktu TOTAL yang dibutuhkan {selesai} detik {catat_awal} s/d {catat_akhir}")
-    print(f"Jumlah response diterima {request_count-count_error}, jumlah response hang {count_error}")
 
 if __name__=='__main__':
     #jumlah request akan dibagi sama rata untuk tiap thread
