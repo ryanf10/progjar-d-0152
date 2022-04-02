@@ -95,11 +95,10 @@ def lihatversi(is_secure=False):
     hasil = send_command(cmd,is_secure=is_secure)
     return hasil
     
-thread_count = 5
+thread_count = 20
 request_count = 20
 
 def mythread(nomor,is_secure=False):
-    print(thread_count)
     threads = {}
 
     catat_awal = datetime.datetime.now()

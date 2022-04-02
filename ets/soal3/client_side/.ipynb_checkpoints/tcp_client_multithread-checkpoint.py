@@ -32,7 +32,7 @@ def make_secure_socket(destination_address='localhost',port=10000):
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_address = (destination_address, port)
-        logging.warning(f"connecting to {server_address}")
+        # logging.warning(f"connecting to {server_address}")
         sock.connect(server_address)
         secure_socket = context.wrap_socket(sock,server_hostname=destination_address)
         # logging.warning(secure_socket.getpeercert())
@@ -95,11 +95,10 @@ def lihatversi(is_secure=False):
     hasil = send_command(cmd,is_secure=is_secure)
     return hasil
     
-thread_count = 5
+thread_count = 20
 request_count = 20
 
 def mythread(nomor,is_secure=False):
-    print(thread_count)
     threads = {}
 
     catat_awal = datetime.datetime.now()
