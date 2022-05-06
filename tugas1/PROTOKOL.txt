@@ -50,3 +50,14 @@ UPLOAD
 - GAGAL:
   - status: ERROR
   - data: pesan kesalahan
+
+DELETE
+* TUJUAN: untuk menghapus file di server
+* PARAMETER:
+  - PARAMETER1: nama file yang akan dihapus
+* RESULT:
+- BERHASIL:
+  - status: OK
+- GAGAL:
+  - status: ERROR
+  - data: pesan kesalahan

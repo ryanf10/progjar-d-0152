@@ -86,12 +86,28 @@ def remote_upload(filename=""):
     except Exception as e:
         print(e)
         return False
+    
+def remote_delete(filename=""):
+    command_str = f"DELETE {filename}"
+    hasil = send_command(command_str)
+    print(hasil)
+    
+    if(hasil['status'] == 'OK'):
+        print(f'Hapus file {filename} berhasil')
+        return True
+    else:
+        print(hasil['data'])
+        return False
 
 
 if __name__=='__main__':
     server_address=('172.16.16.101',6666)
     remote_list()
     # remote_get('donalbebek.jpg')
+    
+    remote_delete('gambar.jpg')
+    remote_list()
+    
     remote_upload('gambar.jpg')
     remote_list()
 
