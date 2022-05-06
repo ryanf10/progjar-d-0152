@@ -39,3 +39,14 @@ GET
   - status: ERROR
   - data: pesan kesalahan
 
+UPLOAD
+* TUJUAN: untuk menyimpan file ke dalam server
+* PARAMETER:
+  - PARAMETER1: nama file yang di-upload
+  - PARAMETER2: data file dalam bentuk base64
+* RESULT:
+- BERHASIL:
+  - status: OK
+- GAGAL:
+  - status: ERROR
+  - data: pesan kesalahan

@@ -12,6 +12,7 @@ def send_command(command_str=""):
     logging.warning(f"connecting to {server_address}")
     try:
         logging.warning(f"sending message ")
+        command_str += "\r\n\r\n"
         sock.sendall(command_str.encode())
         # Look for the response, waiting until socket is done (no more data)
         data_received="" #empty string
@@ -63,9 +64,34 @@ def remote_get(filename=""):
         print("Gagal")
         return False
 
+def remote_upload(filename=""):
+    try:
+        if (filename == ''):
+            return None
+        
+        fp = open(f"{filename}",'rb')
+        isifile = base64.b64encode(fp.read()).decode()
+        
+        command_str = f"UPLOAD {filename} {isifile}"
+        hasil = send_command(command_str)
+        print(hasil)
+        
+        if(hasil['status'] == 'OK'):
+            print(f'Upload file {filename} berhasil')
+            return True
+        else:
+            print(hasil['data'])
+            return False
+        
+    except Exception as e:
+        print(e)
+        return False
+
 
 if __name__=='__main__':
     server_address=('172.16.16.101',6666)
     remote_list()
-    remote_get('donalbebek.jpg')
+    # remote_get('donalbebek.jpg')
+    remote_upload('gambar.jpg')
+    remote_list()
 
